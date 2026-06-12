@@ -28,7 +28,7 @@
 
 <header class="hero" style="padding:clamp(2.6rem,8vw,5.5rem) 0 clamp(2.4rem,6vw,4rem)">
   <p class="eyebrow">Product Design Lead · Los Angeles / Remote</p>
-  <h1 class="display">Designing with machines.</h1>
+  <h1 class="display clay">Designing with machines.</h1>
   <p class="value">I take products from zero to shipped — strategy, research, design, and working prototypes. Over a decade of work spanning AI, fintech, and Web3, from founding teams to Fortune 500.</p>
   <div class="cta-row">
     <a class="btn solid" href="mailto:hello@saraswathi.xyz">Email me</a>
@@ -80,6 +80,27 @@ if(nav){var onscroll=function(){nav.classList.toggle("scrolled",window.scrollY>8
 if(window.matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll(".rv").forEach(function(e){e.classList.add("in")});return;}
 var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});},{threshold:.12});
 document.querySelectorAll(".rv").forEach(function(e){io.observe(e);});
-})();</script>
+
+/* wet clay interaction */
+var clayH=document.querySelector("h1.clay");if(clayH){
+var clayFired=false,minWeight=400,maxWeight=500;
+function updateClayWeight(e){
+  if(clayFired||!clayH)return;
+  var r=clayH.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  var dx=(e.clientX||e.touches[0].clientX)-cx,dy=(e.clientY||e.touches[0].clientY)-cy;
+  var d=Math.sqrt(dx*dx+dy*dy),maxD=Math.max(r.width,r.height);
+  var w=Math.max(minWeight,maxWeight-(d/maxD)*(maxWeight-minWeight-50));
+  clayH.style.setProperty("--clay-weight",Math.round(w));
+}
+function fireClayOnScroll(){
+  var r=clayH.getBoundingClientRect();
+  if(r.bottom<window.innerHeight*0.3){clayFired=true;clayH.classList.add("fired");document.removeEventListener("mousemove",updateClayWeight);document.removeEventListener("touchmove",updateClayWeight,{passive:true});}
+}
+if(!window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+  document.addEventListener("mousemove",updateClayWeight,{passive:true});
+  document.addEventListener("touchmove",updateClayWeight,{passive:true});
+  window.addEventListener("scroll",fireClayOnScroll,{passive:true});
+}
+}</script>
 </body>
 </html>
