@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The whole practice — Saraswathi Subbaraman</title>
+<link rel="stylesheet" href="../assets/styles.css">
 <link rel="icon" href="../assets/favicon-light.svg" media="(prefers-color-scheme: light)"><link rel="icon" href="../assets/favicon-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" href="../assets/favicon-light.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
 <style>
   :root{
     --paper:#FAFAF8; --ink:#141414; --mid:#6E6E6A; --dim:#B7B7B2; --faint:#E6E6E2; --hair:#D7D7D1; --accent:#1F5C42;
@@ -15,7 +17,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .page{max-width:1180px;margin:0 auto;padding:clamp(1.4rem,4vw,3rem) clamp(1rem,3vw,2rem) 4rem}
+  .page{max-width:1060px;margin:0 auto;padding:clamp(1.4rem,4vw,3rem) clamp(1rem,3vw,2rem) 4rem}
   header{margin-bottom:1.4rem}
   .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem}
   h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,5.5vw,2.7rem);letter-spacing:-.015em;line-height:1.02}
@@ -71,6 +73,7 @@
   .nlabel{font-family:var(--sans);font-size:10px;fill:var(--ink);opacity:0;transition:opacity .2s;pointer-events:none}
   .work.on .nlabel,.work.hover .nlabel,.work.sel .nlabel{opacity:1}
   .thread{fill:none;stroke:var(--accent);stroke-width:1.3;opacity:1}
+  .mobile-hint{display:none}
   .legend{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.04em;margin-top:1rem;display:flex;gap:1.2rem;flex-wrap:wrap}
 
   /* ---- card ---- */
@@ -103,33 +106,20 @@
     .card{right:24px;bottom:24px;width:362px;max-height:74vh;overflow-y:auto;border-radius:11px}
   }
   @media (max-width:640px){
+    .mobile-hint{display:inline}
+
     .card{left:0;right:0;bottom:0;width:100%;max-height:82vh;overflow-y:auto;border-radius:16px 16px 0 0}
     .chips{max-width:100%}
     .filters{gap:.9rem 1.3rem}
-    .scroll{scroll-snap-type:x mandatory}
-    .snap{scroll-snap-align:start}
-    .dots{display:flex;gap:9px;justify-content:center;margin-top:12px}
-    .dot{width:7px;height:7px;border-radius:50%;border:1px solid var(--mid);background:none;padding:0;cursor:pointer;transition:all .2s}
-    .dot.on{background:var(--accent);border-color:var(--accent);transform:scale(1.15)}
+    .scroll{-webkit-overflow-scrolling:touch}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;z-index:50;background:rgba(250,250,248,.88);backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:saturate(140%) blur(8px);margin:0 0 0;padding:1.25rem clamp(1rem,3vw,2rem);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-family:'IBM Plex Mono',ui-monospace,monospace;border-bottom:1px solid var(--hair)">
-<a href="../index.html" style="font-size:.78rem;letter-spacing:.06em;color:#141414;text-decoration:none">saraswathi subbaraman</a>
-<div style="display:flex;gap:1.2rem;font-size:.72rem;flex-wrap:wrap">
-<a href="../index.html#work" style="color:#5F5F5B;text-decoration:none">Work</a>
-<a href="../lab/" style="color:#5F5F5B;text-decoration:none">Lab</a>
-<a href="../art/" style="color:#5F5F5B;text-decoration:none">Art</a>
-<a href="../about/" style="color:#5F5F5B;text-decoration:none">About</a>
-<a href="../timeline/" style="color:#141414;text-decoration:none;border-bottom:1px solid #141414">Timeline</a>
-<a href="https://pub-a20c26b3c55e48d38dfcca3dbb499319.r2.dev/ss_2026_resume.pdf" target="_blank" rel="noopener" style="color:#5F5F5B;text-decoration:none">CV</a>
-<a href="mailto:hello@saraswathi.xyz" style="color:#5F5F5B;text-decoration:none">Contact</a>
-</div></nav>
+<div class="wrap"><nav class="top" aria-label="Top"><a class="brand" href="../index.html">saraswathi subbaraman</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../studio/">Studio</a><a href="../about/">About</a><a href="https://pub-a20c26b3c55e48d38dfcca3dbb499319.r2.dev/ss_2026_resume.pdf" target="_blank" rel="noopener">CV</a><a href="mailto:hello@saraswathi.xyz">Contact</a></div></nav></div>
 <div class="page">
   <header>
-    <div class="eyebrow">Saraswathi Subbaraman</div>
     <h1>A practice in lines</h1>
     <p class="lede">Fifteen years designing tools and systems for coordination, trust, and care — as a product lead, an artist, and a researcher. The whole practice on one timeline: filter by what you care about, trace a thread, and open any work to its case study or live site.</p>
     
@@ -145,10 +135,9 @@
   </div>
   <div class="scrollwrap">
     <div class="scroll" id="scroll"><svg id="chart" xmlns="http://www.w3.org/2000/svg"></svg></div>
-    <div class="dots" id="dots"></div>
-  </div>
+    </div>
   <div class="legend">
-    <span>— duration</span><span>○ point in time</span><span>◇ inflection (two lanes)</span><span>thread = your selected tags, in time</span>
+    <span>— duration</span><span>○ point in time</span><span>◇ inflection (two lanes)</span><span>thread = your selected tags, in time</span><span class="mobile-hint">swipe sideways to travel in time →</span>
   </div>
 </div>
 
@@ -171,7 +160,7 @@
 const B="https://www.bettertomorro.ws/projects/", S="https://www.srswthi.com/works/";
 const CS={};
 CS.gardens=`<p><b>Problem.</b> Powerful web3 governance, but technical and form-heavy — friction at community creation, pool setup, and proposal participation, with no clear feedback loops.</p><p><b>Approach.</b> Audited product, UX & brand; remapped the system; clarified organizer and voter happy-paths; rebuilt the information architecture; set a North Star — from a technical governance tool to a guided, intuitive coordination system.</p><p><b>Outcome.</b> A refined system blueprint, user flows, IA, and a product & brand strategy brief; positioning recast for adoption; next phase scoped (guided flows, soft-decision mode, feedback loops).</p>`;
-CS.repair=`<p><b>Problem.</b> AI4 needed an AI-integrated, collective-intelligence tool for restorative-justice facilitators — and first needed clarity on org priorities, product strategy, and how trauma-informed and positive-computing research should shape it.</p><p><b>Approach.</b> Two phases, end-to-end: discovery and prototype testing; deep research into trauma-informed HCI and positive computing; org-strategy facilitation; then a strategy-to-prototype sprint — personas, journeys, IA, wireframes, brand brief, and funder prototype screens. Built olive, a democratically structured RAG model, into the product.</p><p><b>Outcome.</b> Product strategy, roadmap, dev specs, a testable prototype, and funder mockups — a research-grounded restorative-justice tool.</p>`;
+CS.repair=`<p><b>Problem.</b> AI4 needed an AI-integrated, collective-intelligence tool for restorative-justice facilitators — and first needed clarity on org priorities, product strategy, and how trauma-informed and positive-computing research should shape it.</p><p><b>Approach.</b> Two phases, end-to-end: discovery and prototype testing; deep research into trauma-informed HCI and positive computing; org-strategy facilitation; then a strategy-to-prototype sprint — personas, journeys, IA, wireframes, brand brief, and funder prototype screens. Built Olive, a democratically structured RAG model, into the product.</p><p><b>Outcome.</b> Product strategy, roadmap, dev specs, a testable prototype, and funder mockups — a research-grounded restorative-justice tool.</p>`;
 CS.consensys=`<p><b>Problem.</b> Early Ethereum products needed to be usable by people who aren't crypto experts.</p><p><b>Approach.</b> As UX Lead, ran user research, comparative analysis, information architecture, and lo-to-hi-fi prototyping across early-stage apps.</p><p><b>Outcome.</b> Helped shape the UX of MetaMask — now 30M+ users — and Infura.</p>`;
 CS.chase=`<p><b>Problem.</b> Chase's Ultimate Rewards redemption was full of friction — offers hard to discover, points slow to redeem.</p><p><b>Approach.</b> As UX Lead at NYC agency Noise, mapped the end-to-end cardholder journey, ran a design-thinking session, and streamlined the flows; built a responsive, accessible design system with mobile-first optimizations.</p><p><b>Outcome.</b> A premium, brand-aligned rewards experience — faster redemption and higher mobile engagement, integrated into Chase's design system for scalable deployment.</p>`;
 CS.circles=`<p><b>Problem.</b> Could a basic income work with no central issuer — built instead on personal, trust-based currency?</p><p><b>Approach.</b> As Head of Product, led strategy, design, and UX research across the full development cycle; defined the tokenomics behind retention and trust; ran multi-local pilots; led expansion planning and public-sector partnerships.</p><p><b>Outcome.</b> A decentralized, community-first basic-income platform — 100k+ users, a living economic experiment across multiple cities, also exhibited as artwork.</p>`;
@@ -184,7 +173,6 @@ const W = [
  {n:"Gardens",s:"Professional",a:2025,b:2025,o:0,f:"Product strategy & UX",r:"Strategic Creative Partner",st:"Delivered",note:"Recast a complex web3 governance tool into a guided coordination system.",field:["Web3","Civic"],theme:["Community","Decentralization"],medium:["Web"],cs:CS.gardens,url:"https://gardens.fund"},
  {n:"Lobby4Me",s:"Professional",also:["Art"],a:2024,b:2025,o:0,f:"Civic tool / Artwork",r:"Sr. Product Lead",st:"Live",note:"AI that calls Congress in aggregate — a civic product and a participatory artwork.",field:["AI","Civic","Culture"],theme:["Community","Agency"],medium:["Web"],cs:CS.lobby,csu:"../work/lobby4me.html",csu2:S+"lobby4meai",csu2label:"As artwork \u2197"},
  {n:"repair",s:"Professional",also:["Research"],neo:1,a:2025,b:2026,o:0,f:"AI tool / App",r:"Product & Design Lead (0\u21921)",st:"Prototype",note:"0\u21921 AI tool for restorative-justice facilitators (client AI4); research-to-product.",field:["AI","Civic"],theme:["Care","Community"],medium:["Web"],cs:CS.repair,csu:"../work/repair.html"},
- {n:"Neoteric",s:"Professional",neo:1,a:2023,b:2026,o:1,f:"Studio / Practice",r:"Co-founder",st:"Live",note:"0\u21921 studio for community-first product, prototyping, and research.",field:["AI"],theme:["Care","Community"],medium:["Web","Vibe-coded"]},
  {n:"Hypha",s:"Professional",a:2022,b:2024,o:0,f:"Platform",r:"Head of Product",st:"Shipped — 2\u00d7 conversion",note:"Consumer climate-action platform; led full lifecycle, 2\u00d7 conversion.",field:["Climate","Consumer"],theme:["Care","Ecology","Community"],medium:["Web","Mobile"],cs:CS.hypha,csu:"../work/hypha.html",url:"https://hypha.network"},
  {n:"Memri AI",s:"Professional",a:2022,b:2023,o:0,f:"App",r:"AI Product Strategist",st:"MVP",note:"Privacy-first AI productivity app built on a knowledge graph.",field:["AI","Consumer"],theme:["Agency"],medium:["Mobile"],cs:CS.memri,csu:"../work/memri.html",url:"https://memri.io"},
  {n:"Nebula",s:"Professional",a:2021,b:2022,o:0,f:"Journal / Online magazine",r:"Art Director / Designer",st:"Past",note:"Regenerative-cultures journal — art direction and design.",field:["Culture"],theme:["Ecology"],medium:["Web","Writing"],url:"http://nebula.garden/"},
@@ -212,17 +200,16 @@ const W = [
  {n:"MetaDesigner",s:"Research",also:["Professional"],neo:1,a:2024,b:2026,o:1,f:"Tool / Design system",r:"Builder",st:"Live",note:"AI-integrated design system used across the studio's work.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
  {n:"Content system",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Tool",r:"Builder",st:"Internal",note:"AI-assisted content-production system.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
  {n:"Substack",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Writing",r:"Author",st:"WIP",note:"Writing on technology, ecology, and care.",field:["Culture"],theme:["Care","Ecology"],medium:["Web","Writing"]},
- {n:"olive",s:"Research",neo:1,a:2025,b:2025,o:0,f:"RAG model",r:"Builder",st:"Featured in repair",note:"Democratically structured, community-maintained RAG model; featured in repair.",field:["AI"],theme:["Decentralization","Community"],medium:["Vibe-coded"]},
+ {n:"Olive",s:"Research",neo:1,a:2025,b:2025,o:0,f:"RAG model",r:"Builder",st:"Featured in repair",note:"Democratically structured, community-maintained RAG model; featured in repair.",field:["AI"],theme:["Decentralization","Community"],medium:["Vibe-coded"]},
  {n:"Uncertain Futures Institute",s:"Research",a:2022,b:2022,o:0,f:"Research / Design",r:"Design Lead",st:"Past",note:"Speculative-futures research and design.",field:["Culture"],theme:["Speculative"],medium:[]},
  {n:"Restorative computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"An original framework for technology in service of repair.",field:["AI"],theme:["Care","Ecology"],medium:["Writing"]},
  {n:"Trauma-informed computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"Applying trauma-informed principles to computing.",field:["AI"],theme:["Care","Agency"],medium:["Writing"]},
 ];
-W.forEach(w=>{ w.lanes = w.also ? [w.s, ...w.also] : [w.s]; w.studio = w.neo ? ["Neoteric"] : []; });
+W.forEach(w=>{ w.lanes = w.also ? [w.s, ...w.also] : [w.s]; if(w.neo) w.lanes = w.lanes.concat(["Studio"]); });
 const TOTAL=W.length;
 
 const FACETS = [
- {group:"Stream", field:"lanes", vals:["Professional","Art","Research"]},
- {group:"Studio", field:"studio", vals:["Neoteric"]},
+ {group:"Stream", field:"lanes", vals:["Professional","Art","Research","Studio"]},
  {group:"Field",  field:"field", vals:["AI","Web3","Climate","Civic","Fintech","Consumer","Games","Culture"]},
  {group:"Theme",  field:"theme", vals:["Care","Community","Decentralization","Ecology","Embodiment","Agency","Speculative"]},
  {group:"Medium", field:"medium", vals:["Web","Mobile","Blockchain","Installation","Biofeedback","Hardware","AR/XR","Writing","Vibe-coded","Workshop"]},
@@ -309,7 +296,7 @@ function setTab(t){
 function fillCard(w){
   document.getElementById("cardName").textContent=w.n;
   const yr = w.o ? (w.a+"–present") : (w.a===w.b? String(w.a) : w.a+"–"+w.b);
-  document.getElementById("cardSub").innerHTML = `${yr} · ${w.lanes.join(" + ")} · ${w.st}` + (w.neo?` &nbsp;<span class="neo-badge">neoteric</span>`:"");
+  document.getElementById("cardSub").innerHTML = `${yr} · ${w.lanes.join(" + ")} · ${w.st}` + (w.neo?` &nbsp;<span class="neo-badge">studio</span>`:"");
   document.getElementById("paneOverview").innerHTML = (w.note?`<p>${w.note}</p>`:"") + chipsHTML("Field",w.field)+chipsHTML("Theme",w.theme)+chipsHTML("Medium",w.medium)+chipsHTML("Form / Role",[w.f,w.r]);
   // case study tab: inline draft and/or link to existing page
   const hasCase = !!(w.cs || w.csu);
@@ -403,29 +390,6 @@ document.getElementById("reset").onclick=()=>{
 svg.addEventListener("click",()=>{ if(pinned) hideCard(); });
 apply();
 
-// ---------- mobile: swipe the timeline in thirds ----------
-const scroller=document.getElementById("scroll");
-const dotsWrap=document.getElementById("dots");
-let snapPos=[0,0,0];
-for(let i=0;i<3;i++){ const d=document.createElement("button"); d.className="dot"; d.setAttribute("aria-label","Time period "+(i+1)); d.onclick=()=>scroller.scrollTo({left:snapPos[i],behavior:"smooth"}); dotsWrap.appendChild(d); }
-function layoutMobile(){
-  const old=scroller.querySelector(".snaps"); if(old) old.remove();
-  if(window.innerWidth>640){ return; }
-  const vw=scroller.clientWidth, max=Math.max(0,totalW-vw);
-  snapPos=[0, Math.round(max/2), max];
-  const s=document.createElement("div"); s.className="snaps"; s.style.width=totalW+"px";
-  snapPos.forEach(p=>{ const a=document.createElement("div"); a.className="snap"; a.style.left=p+"px"; s.appendChild(a); });
-  scroller.appendChild(s);
-  updateDot();
-}
-function updateDot(){
-  const x=scroller.scrollLeft;
-  let best=0; for(let i=1;i<3;i++){ if(Math.abs(snapPos[i]-x)<Math.abs(snapPos[best]-x)) best=i; }
-  [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle("on",idx===best));
-}
-let st; scroller.addEventListener("scroll",()=>{ clearTimeout(st); st=setTimeout(updateDot,60); });
-let rt; window.addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(layoutMobile,150); });
-layoutMobile();
 </script>
 </body>
 </html>
