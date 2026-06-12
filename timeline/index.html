@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saraswathi Subbaraman — A Practice in Lines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8; --ink:#141414; --mid:#6E6E6A; --dim:#B7B7B2; --faint:#E6E6E2; --hair:#D7D7D1; --accent:#1F5C42;
+    --serif:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace; --sans:"Hanken Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .page{max-width:1180px;margin:0 auto;padding:clamp(1.4rem,4vw,3rem) clamp(1rem,3vw,2rem) 4rem}
+  header{margin-bottom:1.4rem}
+  .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,5.5vw,2.7rem);letter-spacing:-.015em;line-height:1.02}
+  .lede{font-family:var(--serif);font-size:clamp(1rem,2.3vw,1.16rem);line-height:1.5;color:#363633;max-width:64ch;margin-top:.8rem}
+  .meta-links{font-family:var(--mono);font-size:.72rem;color:var(--mid);margin-top:1rem;display:flex;flex-wrap:wrap;gap:.25rem 1.1rem}
+  .meta-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
+  .meta-links a:hover{border-color:var(--accent)}
+  .meta-links a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .stats{font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--dim);margin-top:.7rem}
+  .stats b{color:var(--ink);font-weight:500}
+
+  .filters{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:.9rem 0;margin:1.3rem 0 1.2rem;display:flex;flex-wrap:wrap;gap:.9rem 2rem}
+  .facet{display:flex;flex-direction:column;gap:.45rem}
+  .facet-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  .chips{display:flex;flex-wrap:wrap;gap:.32rem;max-width:42ch}
+  .chip{font-family:var(--mono);font-size:.7rem;color:var(--mid);background:none;border:1px solid var(--hair);border-radius:100px;padding:.22rem .62rem;cursor:pointer;transition:all .15s;white-space:nowrap}
+  .chip:hover{border-color:var(--mid);color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+  .chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .chip:disabled{opacity:.32;cursor:default;border-color:var(--faint);color:var(--dim);background:none}
+  .bar{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.5rem;flex-wrap:wrap}
+  .count{font-family:var(--mono);font-size:.72rem;color:var(--ink)}
+  .count span{color:var(--mid)}
+  .hint{font-family:var(--mono);font-size:.66rem;color:var(--dim)}
+  .reset{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:pointer;border-bottom:1px solid var(--hair);padding:0 0 1px}
+  .reset:hover{color:var(--ink);border-color:var(--ink)}
+  .reset:disabled{opacity:.35;cursor:default}
+
+  .scrollwrap{position:relative}
+  .scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;background:var(--paper);position:relative}
+  svg{display:block}
+  .snaps{position:absolute;top:0;left:0;height:1px;pointer-events:none}
+  .snap{position:absolute;top:0;width:88vw;height:1px}
+  .dots{display:none}
+  .grid-line{stroke:var(--faint);stroke-width:1}
+  .lane-line{stroke:var(--hair);stroke-width:1}
+  .year-label{font-family:var(--mono);font-size:10px;fill:var(--dim);letter-spacing:.04em}
+  .lane-label{font-family:var(--mono);font-size:10px;fill:var(--mid);letter-spacing:.14em;text-transform:uppercase}
+  .lane-count{font-family:var(--mono);font-size:9px;fill:var(--dim)}
+  .seg{stroke:var(--ink);stroke-width:1.4;transition:stroke .2s,opacity .2s}
+  .node{fill:var(--paper);stroke:var(--ink);stroke-width:1.4;transition:all .2s}
+  .bridge{stroke:var(--ink);stroke-width:.9;opacity:.4;transition:opacity .2s}
+  .altnode{fill:var(--paper);stroke:var(--ink);stroke-width:1.2;opacity:.7;transition:all .2s}
+  .work.dim .seg{stroke:var(--dim);opacity:.5}
+  .work.dim .node,.work.dim .altnode{stroke:var(--dim)}
+  .work.dim .bridge{opacity:.15}
+  .work.on .seg{stroke:var(--ink);stroke-width:1.8}
+  .work.on .node,.work.on .altnode{fill:var(--ink);stroke:var(--ink)}
+  .work.on .bridge{opacity:.85}
+  .work.hover .node,.work.hover .altnode,.work.sel .node,.work.sel .altnode{fill:var(--accent);stroke:var(--accent)}
+  .work.hover .bridge,.work.sel .bridge{opacity:.85}
+  .work{cursor:pointer}
+  .nlabel{font-family:var(--sans);font-size:10px;fill:var(--ink);opacity:0;transition:opacity .2s;pointer-events:none}
+  .work.on .nlabel,.work.hover .nlabel,.work.sel .nlabel{opacity:1}
+  .thread{fill:none;stroke:var(--accent);stroke-width:1.3;opacity:1}
+  .legend{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.04em;margin-top:1rem;display:flex;gap:1.2rem;flex-wrap:wrap}
+
+  /* ---- card ---- */
+  .card{position:fixed;z-index:60;background:var(--paper);border:1px solid var(--hair);box-shadow:0 10px 34px rgba(20,20,20,.14);transition:opacity .18s,transform .18s}
+  .card.hidden{opacity:0;transform:translateY(10px);pointer-events:none}
+  .card-pad{padding:16px 18px 18px;position:relative}
+  .card-close{position:absolute;top:8px;right:10px;border:none;background:none;font-size:20px;color:var(--mid);cursor:pointer;line-height:1;padding:4px}
+  .card-close:hover{color:var(--ink)}
+  .card-name{font-family:var(--serif);font-size:1.25rem;font-weight:500;line-height:1.1;padding-right:26px}
+  .card-sub{font-family:var(--mono);font-size:.7rem;color:var(--mid);margin-top:5px;line-height:1.6}
+  .neo-badge{color:var(--accent);border:1px solid var(--accent);border-radius:100px;padding:0 6px;font-size:.6rem;white-space:nowrap}
+  .card-tabs{display:flex;gap:2px;margin:14px 0 11px;border-bottom:1px solid var(--hair)}
+  .tab{font-family:var(--mono);font-size:.72rem;color:var(--mid);background:none;border:none;border-bottom:2px solid transparent;padding:6px 9px;margin-bottom:-1px;cursor:pointer}
+  .tab.on{color:var(--ink);border-color:var(--accent)}
+  .tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .pane{font-size:.85rem;color:var(--mid);line-height:1.55}
+  .pane.hidden{display:none}
+  .pane p{margin-bottom:.5rem} .pane b{color:var(--ink);font-weight:600}
+  .inline-link{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)}
+  .cs-links{margin-top:.55rem;font-family:var(--mono);font-size:.72rem}
+  .crow{font-family:var(--mono);font-size:.6rem;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin:.55rem 0 .28rem}
+  .ctags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+  .ctag{font-family:var(--mono);font-size:.62rem;color:var(--mid);border:1px solid var(--hair);border-radius:100px;padding:2px 7px}
+  .card-actions{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .card-link{display:inline-block;font-family:var(--mono);font-size:.72rem;color:var(--paper);background:var(--accent);border-radius:100px;padding:8px 15px;text-decoration:none}
+  .card-link:hover{opacity:.9}
+  .card-link.alt{background:none;color:var(--accent);border:1px solid var(--accent)}
+
+  @media (min-width:641px){
+    .card{right:24px;bottom:24px;width:362px;max-height:74vh;overflow-y:auto;border-radius:11px}
+  }
+  @media (max-width:640px){
+    .card{left:0;right:0;bottom:0;width:100%;max-height:82vh;overflow-y:auto;border-radius:16px 16px 0 0}
+    .chips{max-width:100%}
+    .filters{gap:.9rem 1.3rem}
+    .scroll{scroll-snap-type:x mandatory}
+    .snap{scroll-snap-align:start}
+    .dots{display:flex;gap:9px;justify-content:center;margin-top:12px}
+    .dot{width:7px;height:7px;border-radius:50%;border:1px solid var(--mid);background:none;padding:0;cursor:pointer;transition:all .2s}
+    .dot.on{background:var(--accent);border-color:var(--accent);transform:scale(1.15)}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="eyebrow">Saraswathi Subbaraman</div>
+    <h1>A practice in lines</h1>
+    <p class="lede">Fifteen years designing tools and systems for coordination, trust, and care — as a product lead, an artist, and a researcher. The whole practice on one timeline: filter by what you care about, trace a thread, and open any work to its case study or live site.</p>
+    <div class="meta-links">
+      <a href="mailto:hello@saraswathi.xyz">Email</a>
+      <a href="https://pub-a20c26b3c55e48d38dfcca3dbb499319.r2.dev/ss_2026_resume.pdf" target="_blank" rel="noopener">CV</a>
+      <a href="https://www.linkedin.com/in/hellosaraswathi/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="../index.html">Home</a>
+      <a href="../art/">Art</a>
+    </div>
+    <p class="stats"><b>12+</b> years &nbsp;·&nbsp; <b>21</b> Fortune 500 clients &nbsp;·&nbsp; <b>10</b> product launches &nbsp;·&nbsp; <b>40+</b> apps designed</p>
+  </header>
+  <div class="filters" id="filters"></div>
+  <div class="bar">
+    <p class="count"><span id="cnum">36</span> <span>of 36 works</span> <span id="cwhich"></span></p>
+    <div style="display:flex;gap:1.1rem;align-items:baseline">
+      <span class="hint" id="hint">hover or tap a point to open it</span>
+      <button class="reset" id="reset" disabled>Reset</button>
+    </div>
+  </div>
+  <div class="scrollwrap">
+    <div class="scroll" id="scroll"><svg id="chart" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="legend">
+    <span>— duration</span><span>○ point in time</span><span>◇ inflection (two lanes)</span><span>thread = your selected tags, in time</span>
+  </div>
+</div>
+
+<div class="card hidden" id="card" aria-hidden="true">
+  <div class="card-pad">
+    <button class="card-close" id="cardClose" aria-label="Close" style="display:none">&times;</button>
+    <div class="card-name" id="cardName"></div>
+    <div class="card-sub" id="cardSub"></div>
+    <div class="card-tabs" id="cardTabs">
+      <button class="tab on" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="case" id="tabCase">Case study</button>
+    </div>
+    <div class="pane" id="paneOverview"></div>
+    <div class="pane hidden" id="paneCase"></div>
+    <div class="card-actions" id="cardActions"></div>
+  </div>
+</div>
+
+<script>
+const B="https://www.bettertomorro.ws/projects/", S="https://www.srswthi.com/works/";
+const CS={};
+CS.gardens=`<p><b>Problem.</b> Powerful web3 governance, but technical and form-heavy — friction at community creation, pool setup, and proposal participation, with no clear feedback loops.</p><p><b>Approach.</b> Audited product, UX & brand; remapped the system; clarified organizer and voter happy-paths; rebuilt the information architecture; set a North Star — from a technical governance tool to a guided, intuitive coordination system.</p><p><b>Outcome.</b> A refined system blueprint, user flows, IA, and a product & brand strategy brief; positioning recast for adoption; next phase scoped (guided flows, soft-decision mode, feedback loops).</p>`;
+CS.repair=`<p><b>Problem.</b> AI4 needed an AI-integrated, collective-intelligence tool for restorative-justice facilitators — and first needed clarity on org priorities, product strategy, and how trauma-informed and positive-computing research should shape it.</p><p><b>Approach.</b> Two phases, end-to-end: discovery and prototype testing; deep research into trauma-informed HCI and positive computing; org-strategy facilitation; then a strategy-to-prototype sprint — personas, journeys, IA, wireframes, brand brief, and funder prototype screens. Built olive, a democratically structured RAG model, into the product.</p><p><b>Outcome.</b> Product strategy, roadmap, dev specs, a testable prototype, and funder mockups — a research-grounded restorative-justice tool.</p>`;
+CS.consensys=`<p><b>Problem.</b> Early Ethereum products needed to be usable by people who aren't crypto experts.</p><p><b>Approach.</b> As UX Lead, ran user research, comparative analysis, information architecture, and lo-to-hi-fi prototyping across early-stage apps.</p><p><b>Outcome.</b> Helped shape the UX of MetaMask — now 30M+ users — and Infura.</p>`;
+CS.chase=`<p><b>Problem.</b> Chase's Ultimate Rewards redemption was full of friction — offers hard to discover, points slow to redeem.</p><p><b>Approach.</b> As UX Lead at NYC agency Noise, mapped the end-to-end cardholder journey, ran a design-thinking session, and streamlined the flows; built a responsive, accessible design system with mobile-first optimizations.</p><p><b>Outcome.</b> A premium, brand-aligned rewards experience — faster redemption and higher mobile engagement, integrated into Chase's design system for scalable deployment.</p>`;
+CS.circles=`<p><b>Problem.</b> Could a basic income work with no central issuer — built instead on personal, trust-based currency?</p><p><b>Approach.</b> As Head of Product, led strategy, design, and UX research across the full development cycle; defined the tokenomics behind retention and trust; ran multi-local pilots; led expansion planning and public-sector partnerships.</p><p><b>Outcome.</b> A decentralized, community-first basic-income platform — 100k+ users, a living economic experiment across multiple cities, also exhibited as artwork.</p>`;
+CS.hypha=`<p><b>Problem.</b> Climate action felt inaccessible to everyday people — high friction, low trust.</p><p><b>Approach.</b> As Head of Product, hired and led a cross-functional team on agile cycles, owned the full lifecycle and strategic roadmap, and used usability testing to restructure the core contribution flows.</p><p><b>Outcome.</b> Doubled conversion and lifted user trust 40% in pilot testing.</p>`;
+CS.lobby=`<p><b>Problem.</b> Calling Congress is high-friction; advocacy is depersonalized and hard to scale.</p><p><b>Approach.</b> Defined the 0→1 vision, experience architecture, and flows — integrating generative AI, text-to-speech, and personalization to call representatives in aggregate. Shipped a responsive design system and mobile-first UI, cutting design-to-dev handoff to under 8 weeks.</p><p><b>Outcome.</b> A live civic tool — and a participatory artwork critiquing automation in democracy (w/ Ashoka Finley).</p>`;
+CS.memri=`<p><b>Problem.</b> AI productivity tools usually ask you to surrender your data.</p><p><b>Approach.</b> As AI Product Strategist, defined 0→1 strategy, prototyped context-aware experiences, and partnered with engineering on a privacy-first knowledge-graph architecture; market analysis and personas scoped the MVP.</p><p><b>Outcome.</b> A validated, privacy-first AI-productivity MVP.</p>`;
+
+const W = [
+ {n:"Massive AI",s:"Professional",a:2025,b:2026,o:1,f:"Product",r:"Consultant, Growth",st:"Live",note:"AI-first job-search engine with auto-apply; growth & new-market entry.",field:["AI","Consumer"],theme:["Agency"],medium:["Web","Mobile"]},
+ {n:"Gardens",s:"Professional",a:2025,b:2025,o:0,f:"Product strategy & UX",r:"Strategic Creative Partner",st:"Delivered",note:"Recast a complex web3 governance tool into a guided coordination system.",field:["Web3","Civic"],theme:["Community","Decentralization"],medium:["Web"],cs:CS.gardens,url:"https://gardens.fund"},
+ {n:"Lobby4Me",s:"Professional",also:["Art"],a:2024,b:2025,o:0,f:"Civic tool / Artwork",r:"Sr. Product Lead",st:"Live",note:"AI that calls Congress in aggregate — a civic product and a participatory artwork.",field:["AI","Civic","Culture"],theme:["Community","Agency"],medium:["Web"],cs:CS.lobby,csu:"../work/lobby4me.html",csu2:S+"lobby4meai",csu2label:"As artwork \u2197"},
+ {n:"repair",s:"Professional",also:["Research"],neo:1,a:2025,b:2026,o:0,f:"AI tool / App",r:"Product & Design Lead (0\u21921)",st:"Prototype",note:"0\u21921 AI tool for restorative-justice facilitators (client AI4); research-to-product.",field:["AI","Civic"],theme:["Care","Community"],medium:["Web"],cs:CS.repair,csu:"../work/repair.html"},
+ {n:"Neoteric",s:"Professional",neo:1,a:2023,b:2026,o:1,f:"Studio / Practice",r:"Co-founder",st:"Live",note:"0\u21921 studio for community-first product, prototyping, and research.",field:["AI"],theme:["Care","Community"],medium:["Web","Vibe-coded"]},
+ {n:"Hypha",s:"Professional",a:2022,b:2024,o:0,f:"Platform",r:"Head of Product",st:"Shipped — 2\u00d7 conversion",note:"Consumer climate-action platform; led full lifecycle, 2\u00d7 conversion.",field:["Climate","Consumer"],theme:["Care","Ecology","Community"],medium:["Web","Mobile"],cs:CS.hypha,csu:"../work/hypha.html",url:"https://hypha.network"},
+ {n:"Memri AI",s:"Professional",a:2022,b:2023,o:0,f:"App",r:"AI Product Strategist",st:"MVP",note:"Privacy-first AI productivity app built on a knowledge graph.",field:["AI","Consumer"],theme:["Agency"],medium:["Mobile"],cs:CS.memri,csu:"../work/memri.html",url:"https://memri.io"},
+ {n:"Nebula",s:"Professional",a:2021,b:2022,o:0,f:"Journal / Online magazine",r:"Art Director / Designer",st:"Past",note:"Regenerative-cultures journal — art direction and design.",field:["Culture"],theme:["Ecology"],medium:["Web","Writing"],url:"http://nebula.garden/"},
+ {n:"Circles",s:"Professional",also:["Art"],a:2017,b:2021,o:0,f:"Platform / Artwork",r:"Head of Product",st:"Pilot — 100k+",note:"Decentralized basic-income platform (100k+ users); also exhibited as artwork.",field:["Web3","Fintech"],theme:["Decentralization","Community","Care"],medium:["Blockchain","Mobile"],cs:CS.circles,csu:"../work/circles.html",csu2:S+"circles-ubi",csu2label:"As artwork \u2197"},
+ {n:"ConsenSys",s:"Professional",a:2016,b:2019,o:0,f:"Product / Infrastructure",r:"UX Lead",st:"Shipped",note:"UX for early Ethereum products — MetaMask (now 30M+) and Infura.",field:["Web3","Fintech"],theme:["Decentralization"],medium:["Blockchain","Web"],cs:CS.consensys},
+ {n:"Ethereal Summit",s:"Professional",a:2017,b:2018,o:0,f:"Event",r:"Co-founder / Art Director",st:"Sold out 3\u00d7",note:"Co-founded & art-directed a web3 culture summit; 500 \u2192 2,500, sold out 3\u00d7.",field:["Web3","Culture"],theme:["Community"],medium:[]},
+ {n:"B-reel",s:"Professional",a:2016,b:2016,o:0,f:"Campaign",r:"Freelance UX",st:"Past",note:"MTV Cover of the Month — freelance UX.",field:["Culture"],theme:[],medium:["Web"]},
+ {n:"Bloomberg",s:"Professional",a:2015,b:2016,o:0,f:"App",r:"Freelance UX Lead",st:"Prototype",note:"First mobile-native Bloomberg Terminal prototype.",field:["Fintech"],theme:[],medium:["Mobile"]},
+ {n:"Chase Bank",s:"Professional",a:2015,b:2015,o:0,f:"Product (rewards)",r:"UX Lead (agency Noise)",st:"Shipped",note:"Chase Ultimate Rewards redesign; mobile-first, design-system integration.",field:["Fintech","Consumer"],theme:[],medium:["Web","Mobile"],cs:CS.chase,csu:"../work/chase.html"},
+ {n:"Wieden+Kennedy",s:"Professional",a:2014,b:2015,o:0,f:"Campaign",r:"Freelance UX",st:"Super Bowl",note:"Squarespace \u00d7 No Kid Hungry Super Bowl interactive piece.",field:["Culture","Civic"],theme:["Care","Community"],medium:["Web"],csu:"../work/squarespace.html"},
+ {n:"Photon",s:"Professional",a:2013,b:2013,o:0,f:"Agency / UX",r:"UX Lead",st:"Past",note:"UX at a NYC design agency.",field:["Culture"],theme:[],medium:["Web"]},
+ {n:"Final Trade",s:"Art",neo:1,a:2024,b:2025,o:0,f:"Game (critical)",r:"Solo / Creator",st:"Live",note:"Critical game — endangered species as memecoins; 2% of trades fund conservation.",field:["Web3","Games"],theme:["Ecology","Decentralization"],medium:["Vibe-coded","Web"],url:"https://finaltra.de"},
+ {n:"Sunbows",s:"Art",neo:1,a:2024,b:2024,o:0,f:"Tool / Social space",r:"Solo / Creator",st:"Live",note:"A public, live painting space where strangers create together.",field:["Culture","Consumer"],theme:["Community","Care"],medium:["Vibe-coded","Web"],url:"https://sunbo.ws"},
+ {n:"myx",s:"Art",also:["Research"],neo:1,a:2024,b:2026,o:1,f:"Tool (research)",r:"Solo / Creator",st:"WIP",note:"Research tool surfacing links between unlikely ideas.",field:["AI"],theme:["Agency","Community"],medium:["Vibe-coded","Web"],url:"https://myx.systems"},
+ {n:"Sagara Nataraaj",s:"Art",a:2022,b:2022,o:0,f:"Sculpture (underwater)",r:"Solo / Creator",st:"Installed — Indonesia",note:"Underwater biorock sculpture grafted with living coral.",field:["Culture"],theme:["Ecology","Embodiment"],medium:["Installation"],csu:S+"sagaranataraja"},
+ {n:"Soft Passage",s:"Art",a:2021,b:2021,o:0,f:"Installation",r:"Solo / Creator",st:"Installed — Poland",note:"A portal of found materials for ceremonial connection with place.",field:["Culture"],theme:["Ecology","Embodiment","Speculative"],medium:["Installation"],csu:S+"mi%C4%99kkieprzej%C5%9Bcie"},
+ {n:"Xyrden",s:"Art",also:["Research"],a:2020,b:2026,o:1,f:"Worldbuilding community",r:"Founder",st:"Active — 1,400+",note:"Queer-ecological speculative worldbuilding community.",field:["Culture"],theme:["Speculative","Ecology","Community"],medium:["Web"],csu:S+"xyrden"},
+ {n:"EVRI",s:"Art",also:["Research"],a:2018,b:2020,o:0,f:"Workshop / LARP",r:"Co-creator",st:"Past",note:"Fictional-currency worldbuilding workshop / LARP (w/ Sarah Friend).",field:["Culture"],theme:["Decentralization","Speculative"],medium:["Workshop"],csu:S+"evri-3147ad"},
+ {n:"One Token",s:"Art",a:2018,b:2018,o:0,f:"Token / Performance",r:"Co-creator",st:"Past",note:"A single indivisible ERC-20 token — critique of ICO culture.",field:["Web3","Culture"],theme:["Decentralization"],medium:["Blockchain"],csu:S+"one-token"},
+ {n:"Holoverse",s:"Art",a:2017,b:2017,o:0,f:"Wearable / AR",r:"Collaborator",st:"Past",note:"AR wearable line for playful digital self-expression.",field:["Culture"],theme:["Embodiment"],medium:["AR/XR"],csu:S+"holoverse"},
+ {n:"Breathe and Bloom",s:"Art",a:2014,b:2014,o:0,f:"Installation",r:"Co-creator",st:"Past",note:"Breath-driven biofeedback installation (w/ Shilo Suleman).",field:["Culture"],theme:["Embodiment","Ecology","Care"],medium:["Biofeedback"],csu:S+"breathe-and-bloom"},
+ {n:"Prince Rama",s:"Art",a:2013,b:2013,o:0,f:"Music video",r:"Producer",st:"MoMA PS1",note:"'Never Forever' — a Now Age rock-opera film (MoMA PS1).",field:["Culture"],theme:["Speculative"],medium:["Installation"],csu:S+"prince-rama-never-forever"},
+ {n:"iBreathe",s:"Art",a:2012,b:2012,o:0,f:"Project",r:"Solo / Creator",st:"Past",note:"A screen that responds to your breath — on 'email apnea.'",field:["Culture"],theme:["Embodiment","Care"],medium:["Biofeedback","Hardware"],csu:S+"ibreathe"},
+ {n:"MAFT!",s:"Art",a:2011,b:2011,o:0,f:"TV show",r:"Project Lead",st:"Past",note:"Magical Apocalypse, Fun Times! — live interactive TV show.",field:["Culture"],theme:["Community","Speculative"],medium:["Web"],csu:S+"maft"},
+ {n:"MetaDesigner",s:"Research",also:["Professional"],neo:1,a:2024,b:2026,o:1,f:"Tool / Design system",r:"Builder",st:"Live",note:"AI-integrated design system used across the studio's work.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
+ {n:"Content system",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Tool",r:"Builder",st:"Internal",note:"AI-assisted content-production system.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
+ {n:"Substack",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Writing",r:"Author",st:"WIP",note:"Writing on technology, ecology, and care.",field:["Culture"],theme:["Care","Ecology"],medium:["Web","Writing"]},
+ {n:"olive",s:"Research",neo:1,a:2025,b:2025,o:0,f:"RAG model",r:"Builder",st:"Featured in repair",note:"Democratically structured, community-maintained RAG model; featured in repair.",field:["AI"],theme:["Decentralization","Community"],medium:["Vibe-coded"]},
+ {n:"Uncertain Futures Institute",s:"Research",a:2022,b:2022,o:0,f:"Research / Design",r:"Design Lead",st:"Past",note:"Speculative-futures research and design.",field:["Culture"],theme:["Speculative"],medium:[]},
+ {n:"Restorative computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"An original framework for technology in service of repair.",field:["AI"],theme:["Care","Ecology"],medium:["Writing"]},
+ {n:"Trauma-informed computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"Applying trauma-informed principles to computing.",field:["AI"],theme:["Care","Agency"],medium:["Writing"]},
+];
+W.forEach(w=>{ w.lanes = w.also ? [w.s, ...w.also] : [w.s]; w.studio = w.neo ? ["Neoteric"] : []; });
+const TOTAL=W.length;
+
+const FACETS = [
+ {group:"Stream", field:"lanes", vals:["Professional","Art","Research"]},
+ {group:"Studio", field:"studio", vals:["Neoteric"]},
+ {group:"Field",  field:"field", vals:["AI","Web3","Climate","Civic","Fintech","Consumer","Games","Culture"]},
+ {group:"Theme",  field:"theme", vals:["Care","Community","Decentralization","Ecology","Embodiment","Agency","Speculative"]},
+ {group:"Medium", field:"medium", vals:["Web","Mobile","Blockchain","Installation","Biofeedback","Hardware","AR/XR","Writing","Vibe-coded","Workshop"]},
+];
+
+const LANES=["Professional","Art","Research"];
+const Y0=2011, Y1=2026;
+const active={}; const chipRefs=[];
+
+const fEl=document.getElementById("filters");
+FACETS.forEach(fc=>{
+  active[fc.group]=new Set();
+  const wrap=document.createElement("div"); wrap.className="facet";
+  const lab=document.createElement("div"); lab.className="facet-label"; lab.textContent=fc.group; wrap.appendChild(lab);
+  const chips=document.createElement("div"); chips.className="chips";
+  fc.vals.forEach(v=>{
+    const b=document.createElement("button");
+    b.className="chip"; b.textContent=v; b.setAttribute("aria-pressed","false");
+    b.onclick=()=>{ const s=active[fc.group]; if(s.has(v)) s.delete(v); else s.add(v);
+      b.setAttribute("aria-pressed", s.has(v)?"true":"false"); apply(); };
+    chipRefs.push({group:fc.group,val:v,el:b}); chips.appendChild(b);
+  });
+  wrap.appendChild(chips); fEl.appendChild(wrap);
+});
+
+function matchFacet(w, fc){ const s=active[fc.group]; for(const lbl of s){ if(!w[fc.field].includes(lbl)) return false; } return true; }
+function isActive(w){ return FACETS.every(fc=>matchFacet(w,fc)); }
+function anySelected(){ return FACETS.some(fc=>active[fc.group].size>0); }
+
+const NS="http://www.w3.org/2000/svg";
+const svg=document.getElementById("chart");
+const ML=150, MR=40, MT=26, MB=34, ROW=24, LANEGAP=30;
+const plotW=900;
+function X(yr){ return ML + ((yr-Y0)/(Y1-Y0))*plotW; }
+
+const laneRows={}, laidWorks=[], laneTops={}, laneMid={};
+let cursorY=MT+14;
+LANES.forEach(lane=>{
+  laneTops[lane]=cursorY;
+  const items=W.filter(w=>w.s===lane).sort((p,q)=> p.a-q.a || p.b-q.b);
+  const rowsEnd=[];
+  items.forEach(w=>{
+    const x0=X(w.a);
+    const x1 = w.o ? X(Y1) : (w.a===w.b ? X(w.a)+10 : X(w.b+0.85));
+    let row=0; while(row<rowsEnd.length && rowsEnd[row] > x0-8) row++;
+    rowsEnd[row]=x1; w._x0=x0; w._x1=x1; w._row=row;
+  });
+  const nrows=Math.max(1,rowsEnd.length);
+  laneRows[lane]=nrows;
+  items.forEach(w=>{ w._y = laneTops[lane] + w._row*ROW; laidWorks.push(w); });
+  laneMid[lane]=laneTops[lane] + ((nrows-1)*ROW)/2;
+  cursorY = laneTops[lane] + nrows*ROW + LANEGAP;
+});
+const totalH=cursorY+MB, totalW=ML+plotW+MR;
+svg.setAttribute("viewBox",`0 0 ${totalW} ${totalH}`);
+svg.setAttribute("width",totalW); svg.setAttribute("height",totalH); svg.style.minWidth=totalW+"px";
+
+function el(tag,attrs){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+function diamond(x,y,r,cls){ return el("path",{class:cls,d:`M ${x} ${y-r} L ${x+r} ${y} L ${x} ${y+r} L ${x-r} ${y} Z`}); }
+
+for(let y=Y0;y<=Y1;y++){
+  svg.appendChild(el("line",{class:"grid-line",x1:X(y),y1:MT,x2:X(y),y2:totalH-MB}));
+  const lab=el("text",{class:"year-label",x:X(y),y:totalH-MB+16,"text-anchor":"middle"}); lab.textContent="'"+String(y).slice(2); svg.appendChild(lab);
+}
+LANES.forEach(lane=>{
+  const top=laneTops[lane], cnt=W.filter(w=>w.s===lane).length;
+  const ll=el("text",{class:"lane-label",x:0,y:top-2}); ll.textContent=lane; svg.appendChild(ll);
+  const lc=el("text",{class:"lane-count",x:0,y:top+11}); lc.textContent=cnt+" works"; svg.appendChild(lc);
+  svg.appendChild(el("line",{class:"lane-line",x1:ML,y1:top+laneRows[lane]*ROW-ROW+13,x2:ML+plotW,y2:top+laneRows[lane]*ROW-ROW+13}));
+});
+
+const threadG=el("g",{}); svg.appendChild(threadG);
+const worksG=el("g",{}); svg.appendChild(worksG);
+
+// ---------- card ----------
+const card=document.getElementById("card"), cardClose=document.getElementById("cardClose");
+let pinned=false, selectedWork=null;
+function chipsHTML(label,arr){ if(!arr||!arr.length) return ""; return `<div class="crow">${label}</div><div class="ctags">${arr.map(t=>`<span class="ctag">${t}</span>`).join("")}</div>`; }
+function setTab(t){
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  document.getElementById("paneOverview").classList.toggle("hidden",t!=="overview");
+  document.getElementById("paneCase").classList.toggle("hidden",t!=="case");
+}
+function fillCard(w){
+  document.getElementById("cardName").textContent=w.n;
+  const yr = w.o ? (w.a+"–present") : (w.a===w.b? String(w.a) : w.a+"–"+w.b);
+  document.getElementById("cardSub").innerHTML = `${yr} · ${w.lanes.join(" + ")} · ${w.st}` + (w.neo?` &nbsp;<span class="neo-badge">neoteric</span>`:"");
+  document.getElementById("paneOverview").innerHTML = (w.note?`<p>${w.note}</p>`:"") + chipsHTML("Field",w.field)+chipsHTML("Theme",w.theme)+chipsHTML("Medium",w.medium)+chipsHTML("Form / Role",[w.f,w.r]);
+  // case study tab: inline draft and/or link to existing page
+  const hasCase = !!(w.cs || w.csu);
+  document.getElementById("tabCase").style.display = hasCase ? "" : "none";
+  if(hasCase){
+    let html = w.cs || "<p>A dedicated case study for this work lives on the site.</p>";
+    const links=[];
+    if(w.csu) links.push(`<a class="inline-link" href="${w.csu}" target="_blank" rel="noopener">Read the full case study \u2197</a>`);
+    if(w.csu2) links.push(`<a class="inline-link" href="${w.csu2}" target="_blank" rel="noopener">${w.csu2label}</a>`);
+    if(links.length) html += `<p class="cs-links">${links.join(" &nbsp;·&nbsp; ")}</p>`;
+    document.getElementById("paneCase").innerHTML = html;
+  }
+  const act=document.getElementById("cardActions"); act.innerHTML="";
+  if(w.url){ const a=document.createElement("a"); a.className="card-link"; a.href=w.url; a.target="_blank"; a.rel="noopener"; a.textContent="Visit live \u2197"; act.appendChild(a); }
+  if(w.csu){ const a=document.createElement("a"); a.className="card-link alt"; a.href=w.csu; a.target="_blank"; a.rel="noopener"; a.textContent="Case study \u2197"; act.appendChild(a); }
+  setTab("overview");
+}
+function showCard(w,pin){
+  selectedWork=w; fillCard(w);
+  card.classList.remove("hidden"); card.setAttribute("aria-hidden","false");
+  pinned=pin; cardClose.style.display = pin ? "" : "none";
+  if(pin){ laidWorks.forEach(o=>o._g && o._g.classList.toggle("sel", o===w)); }
+}
+function hideCard(){ card.classList.add("hidden"); card.setAttribute("aria-hidden","true"); pinned=false; selectedWork=null; laidWorks.forEach(o=>o._g&&o._g.classList.remove("sel")); }
+cardClose.onclick=hideCard;
+document.querySelectorAll(".tab").forEach(b=> b.onclick=()=>setTab(b.dataset.tab));
+
+// draw works
+laidWorks.forEach(w=>{
+  const inflect = w.lanes.length>1;
+  const g=el("g",{class:"work"});
+  if(inflect){ (w.also||[]).forEach(lane=>{ const my=laneMid[lane];
+    g.appendChild(el("line",{class:"bridge",x1:w._x0,y1:w._y,x2:w._x0,y2:my}));
+    g.appendChild(diamond(w._x0,my,3.1,"altnode")); }); }
+  if(w.a===w.b && !w.o){
+    g.appendChild(inflect? diamond(w._x0,w._y,3.8,"node") : el("circle",{class:"node",cx:w._x0,cy:w._y,r:3.4}));
+  }else{
+    g.appendChild(el("line",{class:"seg",x1:w._x0,y1:w._y,x2:w._x1,y2:w._y,"stroke-linecap":"round"}));
+    g.appendChild(inflect? diamond(w._x0,w._y,3.8,"node") : el("circle",{class:"node",cx:w._x0,cy:w._y,r:3.4}));
+    if(w.o) g.appendChild(el("path",{class:"seg",d:`M ${w._x1-5} ${w._y-3} L ${w._x1} ${w._y} L ${w._x1-5} ${w._y+3}`,fill:"none"}));
+  }
+  const tx=el("text",{class:"nlabel",x:w._x0,y:w._y-6}); tx.textContent=w.n; g.appendChild(tx);
+  g.appendChild(el("line",{x1:w._x0,y1:w._y,x2:(w.o?X(Y1):w._x1),y2:w._y,stroke:"#000","stroke-opacity":"0","stroke-width":"16","pointer-events":"stroke"}));
+  g.appendChild(el("circle",{cx:w._x0,cy:w._y,r:12,fill:"#000","fill-opacity":"0","pointer-events":"all"}));
+  g.addEventListener("mouseenter",()=>{ g.classList.add("hover"); if(!pinned) showCard(w,false); });
+  g.addEventListener("mouseleave",()=>{ g.classList.remove("hover"); if(!pinned) hideCard(); });
+  g.addEventListener("click",(e)=>{ e.stopPropagation(); showCard(w,true); });
+  w._g=g; worksG.appendChild(g);
+});
+
+function drawThread(list){
+  threadG.innerHTML="";
+  if(list.length<2) return;
+  const pts=list.map(w=>[ (w._x0 + (w.a===w.b? w._x0 : w._x1))/2, w._y ]).sort((p,q)=>p[0]-q[0]);
+  let d=`M ${pts[0][0]} ${pts[0][1]}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||pts[i+1];
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2[0]} ${p2[1]}`;
+  }
+  const path=el("path",{class:"thread",d:d}); threadG.appendChild(path);
+  if(!window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+    const len=path.getTotalLength();
+    path.style.strokeDasharray=len; path.style.strokeDashoffset=len; path.getBoundingClientRect();
+    path.style.transition="stroke-dashoffset .9s ease"; path.style.strokeDashoffset=0;
+  }
+}
+
+function apply(){
+  const sel=anySelected(); const on=[];
+  laidWorks.forEach(w=>{ const a=isActive(w);
+    w._g.classList.toggle("dim", sel && !a); w._g.classList.toggle("on", sel && a);
+    if(sel && a) on.push(w); });
+  drawThread(sel?on:[]);
+  document.getElementById("cnum").textContent = sel ? on.length : TOTAL;
+  const which=[]; FACETS.forEach(fc=>{ active[fc.group].forEach(v=>which.push(v)); });
+  document.getElementById("cwhich").textContent = which.length? "· "+which.join(" + ") : "";
+  document.getElementById("reset").disabled = !sel;
+  document.getElementById("hint").textContent = sel? "tracing the thread" : "hover or tap a point to open it";
+  chipRefs.forEach(c=>{
+    if(active[c.group].has(c.val)){ c.el.disabled=false; return; }
+    active[c.group].add(c.val); const ok=W.some(isActive); active[c.group].delete(c.val);
+    c.el.disabled=!ok;
+  });
+}
+document.getElementById("reset").onclick=()=>{
+  FACETS.forEach(fc=>active[fc.group].clear());
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false")); apply();
+};
+svg.addEventListener("click",()=>{ if(pinned) hideCard(); });
+apply();
+
+// ---------- mobile: swipe the timeline in thirds ----------
+const scroller=document.getElementById("scroll");
+const dotsWrap=document.getElementById("dots");
+let snapPos=[0,0,0];
+for(let i=0;i<3;i++){ const d=document.createElement("button"); d.className="dot"; d.setAttribute("aria-label","Time period "+(i+1)); d.onclick=()=>scroller.scrollTo({left:snapPos[i],behavior:"smooth"}); dotsWrap.appendChild(d); }
+function layoutMobile(){
+  const old=scroller.querySelector(".snaps"); if(old) old.remove();
+  if(window.innerWidth>640){ return; }
+  const vw=scroller.clientWidth, max=Math.max(0,totalW-vw);
+  snapPos=[0, Math.round(max/2), max];
+  const s=document.createElement("div"); s.className="snaps"; s.style.width=totalW+"px";
+  snapPos.forEach(p=>{ const a=document.createElement("div"); a.className="snap"; a.style.left=p+"px"; s.appendChild(a); });
+  scroller.appendChild(s);
+  updateDot();
+}
+function updateDot(){
+  const x=scroller.scrollLeft;
+  let best=0; for(let i=1;i<3;i++){ if(Math.abs(snapPos[i]-x)<Math.abs(snapPos[best]-x)) best=i; }
+  [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle("on",idx===best));
+}
+let st; scroller.addEventListener("scroll",()=>{ clearTimeout(st); st=setTimeout(updateDot,60); });
+let rt; window.addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(layoutMobile,150); });
+layoutMobile();
+</script>
+</body>
+</html>
