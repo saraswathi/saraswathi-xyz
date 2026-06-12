@@ -116,17 +116,8 @@
 </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;z-index:50;background:rgba(250,250,248,.88);backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:saturate(140%) blur(8px);margin:0 0 0;padding:1.25rem clamp(1rem,3vw,2rem);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-family:'IBM Plex Mono',ui-monospace,monospace;border-bottom:1px solid var(--hair)">
-<a href="../index.html" style="font-size:.78rem;letter-spacing:.06em;color:#141414;text-decoration:none">saraswathi subbaraman</a>
-<div style="display:flex;gap:1.2rem;font-size:.72rem;flex-wrap:wrap">
-<a href="../index.html#work" style="color:#5F5F5B;text-decoration:none">Work</a>
-<a href="../lab/" style="color:#5F5F5B;text-decoration:none">Lab</a>
-<a href="../art/" style="color:#5F5F5B;text-decoration:none">Art</a>
-<a href="../about/" style="color:#5F5F5B;text-decoration:none">About</a>
-<a href="../timeline/" style="color:#141414;text-decoration:none;border-bottom:1px solid #141414">Timeline</a>
-<a href="https://pub-a20c26b3c55e48d38dfcca3dbb499319.r2.dev/ss_2026_resume.pdf" target="_blank" rel="noopener" style="color:#5F5F5B;text-decoration:none">CV</a>
-<a href="mailto:hello@saraswathi.xyz" style="color:#5F5F5B;text-decoration:none">Contact</a>
-</div></nav>
+<nav class="top" aria-label="Top"><a class="brand" href="../index.html">saraswathi subbaraman</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../lab/">Lab</a><a href="../art/">Art</a><a href="../about/">About</a><a href="../timeline/" aria-current="page">Timeline</a><a href="https://pub-a20c26b3c55e48d38dfcca3dbb499319.r2.dev/ss_2026_resume.pdf" target="_blank" rel="noopener">CV</a><a href="mailto:hello@saraswathi.xyz">Contact</a></div></nav>
+<link rel="stylesheet" href="../assets/styles.css">
 <div class="page">
   <header>
     <div class="eyebrow">Saraswathi Subbaraman</div>
@@ -183,8 +174,7 @@ const W = [
  {n:"Massive AI",s:"Professional",a:2025,b:2026,o:1,f:"Product",r:"Consultant, Growth",st:"Live",note:"AI-first job-search engine with auto-apply; growth & new-market entry.",field:["AI","Consumer"],theme:["Agency"],medium:["Web","Mobile"]},
  {n:"Gardens",s:"Professional",a:2025,b:2025,o:0,f:"Product strategy & UX",r:"Strategic Creative Partner",st:"Delivered",note:"Recast a complex web3 governance tool into a guided coordination system.",field:["Web3","Civic"],theme:["Community","Decentralization"],medium:["Web"],cs:CS.gardens,url:"https://gardens.fund"},
  {n:"Lobby4Me",s:"Professional",also:["Art"],a:2024,b:2025,o:0,f:"Civic tool / Artwork",r:"Sr. Product Lead",st:"Live",note:"AI that calls Congress in aggregate — a civic product and a participatory artwork.",field:["AI","Civic","Culture"],theme:["Community","Agency"],medium:["Web"],cs:CS.lobby,csu:"../work/lobby4me.html",csu2:S+"lobby4meai",csu2label:"As artwork \u2197"},
- {n:"repair",s:"Professional",also:["Research"],neo:1,a:2025,b:2026,o:0,f:"AI tool / App",r:"Product & Design Lead (0\u21921)",st:"Prototype",note:"0\u21921 AI tool for restorative-justice facilitators (client AI4); research-to-product.",field:["AI","Civic"],theme:["Care","Community"],medium:["Web"],cs:CS.repair,csu:"../work/repair.html"},
- {n:"Neoteric",s:"Professional",neo:1,a:2023,b:2026,o:1,f:"Studio / Practice",r:"Co-founder",st:"Live",note:"0\u21921 studio for community-first product, prototyping, and research.",field:["AI"],theme:["Care","Community"],medium:["Web","Vibe-coded"]},
+ {n:"repair",s:"Professional",also:["Research"],a:2025,b:2026,o:0,f:"AI tool / App",r:"Product & Design Lead (0\u21921)",st:"Prototype",note:"0\u21921 AI tool for restorative-justice facilitators (client AI4); research-to-product.",field:["AI","Civic"],theme:["Care","Community"],medium:["Web"],cs:CS.repair,csu:"../work/repair.html"},
  {n:"Hypha",s:"Professional",a:2022,b:2024,o:0,f:"Platform",r:"Head of Product",st:"Shipped — 2\u00d7 conversion",note:"Consumer climate-action platform; led full lifecycle, 2\u00d7 conversion.",field:["Climate","Consumer"],theme:["Care","Ecology","Community"],medium:["Web","Mobile"],cs:CS.hypha,csu:"../work/hypha.html",url:"https://hypha.network"},
  {n:"Memri AI",s:"Professional",a:2022,b:2023,o:0,f:"App",r:"AI Product Strategist",st:"MVP",note:"Privacy-first AI productivity app built on a knowledge graph.",field:["AI","Consumer"],theme:["Agency"],medium:["Mobile"],cs:CS.memri,csu:"../work/memri.html",url:"https://memri.io"},
  {n:"Nebula",s:"Professional",a:2021,b:2022,o:0,f:"Journal / Online magazine",r:"Art Director / Designer",st:"Past",note:"Regenerative-cultures journal — art direction and design.",field:["Culture"],theme:["Ecology"],medium:["Web","Writing"],url:"http://nebula.garden/"},
@@ -196,9 +186,9 @@ const W = [
  {n:"Chase Bank",s:"Professional",a:2015,b:2015,o:0,f:"Product (rewards)",r:"UX Lead (agency Noise)",st:"Shipped",note:"Chase Ultimate Rewards redesign; mobile-first, design-system integration.",field:["Fintech","Consumer"],theme:[],medium:["Web","Mobile"],cs:CS.chase,csu:"../work/chase.html"},
  {n:"Wieden+Kennedy",s:"Professional",a:2014,b:2015,o:0,f:"Campaign",r:"Freelance UX",st:"Super Bowl",note:"Squarespace \u00d7 No Kid Hungry Super Bowl interactive piece.",field:["Culture","Civic"],theme:["Care","Community"],medium:["Web"],csu:"../work/squarespace.html"},
  {n:"Photon",s:"Professional",a:2013,b:2013,o:0,f:"Agency / UX",r:"UX Lead",st:"Past",note:"UX at a NYC design agency.",field:["Culture"],theme:[],medium:["Web"]},
- {n:"Final Trade",s:"Art",neo:1,a:2024,b:2025,o:0,f:"Game (critical)",r:"Solo / Creator",st:"Live",note:"Critical game — endangered species as memecoins; 2% of trades fund conservation.",field:["Web3","Games"],theme:["Ecology","Decentralization"],medium:["Vibe-coded","Web"],url:"https://finaltra.de"},
- {n:"Sunbows",s:"Art",neo:1,a:2024,b:2024,o:0,f:"Tool / Social space",r:"Solo / Creator",st:"Live",note:"A public, live painting space where strangers create together.",field:["Culture","Consumer"],theme:["Community","Care"],medium:["Vibe-coded","Web"],url:"https://sunbo.ws"},
- {n:"myx",s:"Art",also:["Research"],neo:1,a:2024,b:2026,o:1,f:"Tool (research)",r:"Solo / Creator",st:"WIP",note:"Research tool surfacing links between unlikely ideas.",field:["AI"],theme:["Agency","Community"],medium:["Vibe-coded","Web"],url:"https://myx.systems"},
+ {n:"Final Trade",s:"Art",a:2024,b:2025,o:0,f:"Game (critical)",r:"Solo / Creator",st:"Live",note:"Critical game — endangered species as memecoins; 2% of trades fund conservation.",field:["Web3","Games"],theme:["Ecology","Decentralization"],medium:["Vibe-coded","Web"],url:"https://finaltra.de"},
+ {n:"Sunbows",s:"Art",a:2024,b:2024,o:0,f:"Tool / Social space",r:"Solo / Creator",st:"Live",note:"A public, live painting space where strangers create together.",field:["Culture","Consumer"],theme:["Community","Care"],medium:["Vibe-coded","Web"],url:"https://sunbo.ws"},
+ {n:"myx",s:"Art",also:["Research"],a:2024,b:2026,o:1,f:"Tool (research)",r:"Solo / Creator",st:"WIP",note:"Research tool surfacing links between unlikely ideas.",field:["AI"],theme:["Agency","Community"],medium:["Vibe-coded","Web"],url:"https://myx.systems"},
  {n:"Sagara Nataraaj",s:"Art",a:2022,b:2022,o:0,f:"Sculpture (underwater)",r:"Solo / Creator",st:"Installed — Indonesia",note:"Underwater biorock sculpture grafted with living coral.",field:["Culture"],theme:["Ecology","Embodiment"],medium:["Installation"],csu:S+"sagaranataraja"},
  {n:"Soft Passage",s:"Art",a:2021,b:2021,o:0,f:"Installation",r:"Solo / Creator",st:"Installed — Poland",note:"A portal of found materials for ceremonial connection with place.",field:["Culture"],theme:["Ecology","Embodiment","Speculative"],medium:["Installation"],csu:S+"mi%C4%99kkieprzej%C5%9Bcie"},
  {n:"Xyrden",s:"Art",also:["Research"],a:2020,b:2026,o:1,f:"Worldbuilding community",r:"Founder",st:"Active — 1,400+",note:"Queer-ecological speculative worldbuilding community.",field:["Culture"],theme:["Speculative","Ecology","Community"],medium:["Web"],csu:S+"xyrden"},
@@ -209,20 +199,19 @@ const W = [
  {n:"Prince Rama",s:"Art",a:2013,b:2013,o:0,f:"Music video",r:"Producer",st:"MoMA PS1",note:"'Never Forever' — a Now Age rock-opera film (MoMA PS1).",field:["Culture"],theme:["Speculative"],medium:["Installation"],csu:S+"prince-rama-never-forever"},
  {n:"iBreathe",s:"Art",a:2012,b:2012,o:0,f:"Project",r:"Solo / Creator",st:"Past",note:"A screen that responds to your breath — on 'email apnea.'",field:["Culture"],theme:["Embodiment","Care"],medium:["Biofeedback","Hardware"],csu:S+"ibreathe"},
  {n:"MAFT!",s:"Art",a:2011,b:2011,o:0,f:"TV show",r:"Project Lead",st:"Past",note:"Magical Apocalypse, Fun Times! — live interactive TV show.",field:["Culture"],theme:["Community","Speculative"],medium:["Web"],csu:S+"maft"},
- {n:"MetaDesigner",s:"Research",also:["Professional"],neo:1,a:2024,b:2026,o:1,f:"Tool / Design system",r:"Builder",st:"Live",note:"AI-integrated design system used across the studio's work.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
- {n:"Content system",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Tool",r:"Builder",st:"Internal",note:"AI-assisted content-production system.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
- {n:"Substack",s:"Research",neo:1,a:2024,b:2026,o:1,f:"Writing",r:"Author",st:"WIP",note:"Writing on technology, ecology, and care.",field:["Culture"],theme:["Care","Ecology"],medium:["Web","Writing"]},
- {n:"olive",s:"Research",neo:1,a:2025,b:2025,o:0,f:"RAG model",r:"Builder",st:"Featured in repair",note:"Democratically structured, community-maintained RAG model; featured in repair.",field:["AI"],theme:["Decentralization","Community"],medium:["Vibe-coded"]},
+ {n:"MetaDesigner",s:"Research",also:["Professional"],a:2024,b:2026,o:1,f:"Tool / Design system",r:"Builder",st:"Live",note:"AI-integrated design system used across projects.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
+ {n:"Content system",s:"Research",a:2024,b:2026,o:1,f:"Tool",r:"Builder",st:"Internal",note:"AI-assisted content-production system.",field:["AI"],theme:[],medium:["Vibe-coded","Web"]},
+ {n:"Substack",s:"Research",a:2024,b:2026,o:1,f:"Writing",r:"Author",st:"WIP",note:"Writing on technology, ecology, and care.",field:["Culture"],theme:["Care","Ecology"],medium:["Web","Writing"]},
+ {n:"olive",s:"Research",a:2025,b:2025,o:0,f:"RAG model",r:"Builder",st:"Featured in repair",note:"Democratically structured, community-maintained RAG model; featured in repair.",field:["AI"],theme:["Decentralization","Community"],medium:["Vibe-coded"]},
  {n:"Uncertain Futures Institute",s:"Research",a:2022,b:2022,o:0,f:"Research / Design",r:"Design Lead",st:"Past",note:"Speculative-futures research and design.",field:["Culture"],theme:["Speculative"],medium:[]},
- {n:"Restorative computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"An original framework for technology in service of repair.",field:["AI"],theme:["Care","Ecology"],medium:["Writing"]},
- {n:"Trauma-informed computing",s:"Research",neo:1,a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"Applying trauma-informed principles to computing.",field:["AI"],theme:["Care","Agency"],medium:["Writing"]},
+ {n:"Restorative computing",s:"Research",a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"An original framework for technology in service of repair.",field:["AI"],theme:["Care","Ecology"],medium:["Writing"]},
+ {n:"Trauma-informed computing",s:"Research",a:2022,b:2026,o:1,f:"Framework",r:"Author",st:"Ongoing",note:"Applying trauma-informed principles to computing.",field:["AI"],theme:["Care","Agency"],medium:["Writing"]},
 ];
-W.forEach(w=>{ w.lanes = w.also ? [w.s, ...w.also] : [w.s]; w.studio = w.neo ? ["Neoteric"] : []; });
+W.forEach(w=>{ w.lanes = w.also ? [w.s, ...w.also] : [w.s]; });
 const TOTAL=W.length;
 
 const FACETS = [
  {group:"Stream", field:"lanes", vals:["Professional","Art","Research"]},
- {group:"Studio", field:"studio", vals:["Neoteric"]},
  {group:"Field",  field:"field", vals:["AI","Web3","Climate","Civic","Fintech","Consumer","Games","Culture"]},
  {group:"Theme",  field:"theme", vals:["Care","Community","Decentralization","Ecology","Embodiment","Agency","Speculative"]},
  {group:"Medium", field:"medium", vals:["Web","Mobile","Blockchain","Installation","Biofeedback","Hardware","AR/XR","Writing","Vibe-coded","Workshop"]},
@@ -309,7 +298,7 @@ function setTab(t){
 function fillCard(w){
   document.getElementById("cardName").textContent=w.n;
   const yr = w.o ? (w.a+"–present") : (w.a===w.b? String(w.a) : w.a+"–"+w.b);
-  document.getElementById("cardSub").innerHTML = `${yr} · ${w.lanes.join(" + ")} · ${w.st}` + (w.neo?` &nbsp;<span class="neo-badge">neoteric</span>`:"");
+  document.getElementById("cardSub").innerHTML = `${yr} · ${w.lanes.join(" + ")} · ${w.st}`;
   document.getElementById("paneOverview").innerHTML = (w.note?`<p>${w.note}</p>`:"") + chipsHTML("Field",w.field)+chipsHTML("Theme",w.theme)+chipsHTML("Medium",w.medium)+chipsHTML("Form / Role",[w.f,w.r]);
   // case study tab: inline draft and/or link to existing page
   const hasCase = !!(w.cs || w.csu);
