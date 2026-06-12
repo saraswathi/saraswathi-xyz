@@ -7,7 +7,8 @@ html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
 a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .wrap{max-width:1060px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem)}
-nav.top{display:flex;justify-content:space-between;align-items:center;padding:1.3rem 0;gap:1rem;flex-wrap:wrap}
+nav.top{display:flex;justify-content:space-between;align-items:center;padding:1.3rem 0;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid transparent;transition:border-color .2s}
+nav.top.scrolled{border-bottom-color:var(--hair)}
 .brand{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;color:var(--ink);text-decoration:none}
 .nav-links{display:flex;gap:1.25rem;font-family:var(--mono);font-size:.72rem;flex-wrap:wrap}
 .nav-links a{color:var(--mid);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}

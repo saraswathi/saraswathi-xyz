@@ -42,6 +42,12 @@
 </div>
 <footer class="site"><a class="egg" href="../timeline/">For the curious — the whole practice, 2011–2026, on one timeline →</a><span class="foot-meta">© 2026 saraswathi subbaraman · better tomorrows, by design</span></footer>
 </div>
-<script>(function(){if(window.matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll(".rv").forEach(function(e){e.classList.add("in")});return;}var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});},{threshold:.12});document.querySelectorAll(".rv").forEach(function(e){io.observe(e);});})();</script>
+<script>(function(){
+var nav=document.querySelector("nav.top");
+if(nav){var onscroll=function(){nav.classList.toggle("scrolled",window.scrollY>8);};onscroll();window.addEventListener("scroll",onscroll,{passive:true});}
+if(window.matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll(".rv").forEach(function(e){e.classList.add("in")});return;}
+var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});},{threshold:.12});
+document.querySelectorAll(".rv").forEach(function(e){io.observe(e);});
+})();</script>
 </body>
 </html>
