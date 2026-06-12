@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Saraswathi Subbaraman — Product Design Lead">
 <meta name="twitter:description" content="Product Design Lead. Zero to shipped — strategy, research, design, and working code. AI-native, end-to-end.">
 <meta name="twitter:image" content="https://saraswathi.xyz/assets/og.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..600,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=IBM+Plex+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..600,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 
 </head>
@@ -29,7 +29,7 @@
 <header class="hero" style="padding:clamp(2.6rem,8vw,5.5rem) 0 clamp(2.4rem,6vw,4rem)">
   <div class="hero-grid"><div>
   <p class="eyebrow">Product Design Lead · Los Angeles / Remote</p>
-  <h1 class="display" id="clay" aria-label="Designing with machines.">Designing with <span class="uline">machines.</span></h1>
+  <h1 class="display">Designing with machines.</h1>
   <p class="value">I take products from zero to shipped: strategy, research, design, and working code. Over a decade of work spanning AI, fintech, and Web3, from founding teams to Fortune 500.</p>
   <div class="cta-row">
     <a class="btn solid" href="mailto:hello@saraswathi.xyz">Email me</a>
@@ -122,46 +122,6 @@
       letters.forEach(function(l){ l.style.fontVariationSettings='"SOFT" 30,"WONK" 1,"wght" 500'; l.style.color=''; });
     }
   },{passive:true});
-})();
-</script>
-<script>
-(function(){
- if(window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
- var h=document.querySelector(".hero h1.display"); if(!h) return;
- var words=h.textContent.split(" ");
- h.textContent="";
- words.forEach(function(w,wi){
-   var ws=document.createElement("span"); ws.className="cw";
-   for(var i=0;i<w.length;i++){ var l=document.createElement("span"); l.className="cl"; l.textContent=w[i]; ws.appendChild(l); }
-   h.appendChild(ws);
-   if(wi<words.length-1) h.appendChild(document.createTextNode(" "));
- });
- var letters=[].slice.call(h.querySelectorAll(".cl"));
- var fired=false, raf=null, px=-9999, py=-9999;
- var BASE=500, PEAK=760, R=160;
- function frame(){
-   raf=null;
-   for(var i=0;i<letters.length;i++){
-     var r=letters[i].getBoundingClientRect();
-     var cx=r.left+r.width/2, cy=r.top+r.height/2;
-     var d=Math.hypot(px-cx,py-cy);
-     var t=Math.max(0,1-d/R);
-     var w=Math.round(BASE+(PEAK-BASE)*t*t);
-     letters[i].style.fontVariationSettings='"wght" '+w;
-   }
- }
- function move(x,y){ if(fired) return; px=x; py=y; h.classList.add("molding"); if(!raf) raf=requestAnimationFrame(frame); }
- document.addEventListener("mousemove",function(e){ move(e.clientX,e.clientY); },{passive:true});
- document.addEventListener("touchmove",function(e){ var t=e.touches[0]; if(t) move(t.clientX,t.clientY); },{passive:true});
- // the firing: scroll past the hero and the clay sets
- window.addEventListener("scroll",function(){
-   if(fired) return;
-   var hb=h.getBoundingClientRect();
-   if(hb.bottom < 0){
-     fired=true; h.classList.remove("molding");
-     letters.forEach(function(l){ l.style.fontVariationSettings='"wght" '+BASE; });
-   }
- },{passive:true});
 })();
 </script>
 <footer class="site"><a class="egg" href="timeline/">For the curious — the whole practice, 2011–2026, on one timeline →</a><span class="foot-meta">© 2026 saraswathi subbaraman · designed by hand, produced with machines under direction</span></footer>
