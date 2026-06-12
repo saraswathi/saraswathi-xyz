@@ -75,7 +75,8 @@ footer.site{border-top:1px solid var(--hair);padding:1.6rem 0 2.6rem;display:fle
 .contact-band .sub{color:var(--mid);margin-top:.8rem;max-width:52ch}
 
 /* case-study pages */
-.cs-hero{padding:clamp(2rem,6vw,3.6rem) 0 0}
+.cs-hero{padding:clamp(3rem,8vw,5rem) 0 0;max-width:880px}
+.cs-body{max-width:880px}
 .cs-hero .dek{font-family:var(--serif);font-size:clamp(1.05rem,2.4vw,1.3rem);color:#33332F;max-width:52ch;margin-top:1rem;line-height:1.45}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.2rem}
 .tag{font-family:var(--mono);font-size:.66rem;color:var(--mid);border:1px solid var(--hair);border-radius:100px;padding:3px 10px}
