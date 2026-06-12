@@ -40,8 +40,6 @@
     <span><b>12+</b> years</span><span><b>10</b> product launches</span><span><b>21</b> Fortune 500 clients</span>
     <span>MetaMask · Chase · Bloomberg · Squarespace</span>
   </p>
-  </div>
-  </div>
 </header>
 <section id="work"><h2 class="sec-head">Selected work</h2><div class="thread-zone"><article class="case rv"><div class="case-grid"><div>
 <p class="kicker"><b>Lobby4Me AI</b> · 2024–25 · Sr. Product Lead</p><h3>An AI platform that calls Congress for you — designed 0→1, shipped live.</h3><p class="sum">Defined the product vision, experience architecture, and design system for AI-scripted, voice-automated civic outreach — generative AI, text-to-speech, and personalization in one mobile-first flow.</p>
@@ -71,57 +69,7 @@
     <a class="btn line" href="https://www.linkedin.com/in/hellosaraswathi/" target="_blank" rel="noopener">LinkedIn</a>
   </div>
 </section>
-<script>
-(function(){
-  var h=document.getElementById("clay"); if(!h) return;
-  if(window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-  var letters=[];
-  function splitInto(container){
-    var nodes=Array.prototype.slice.call(container.childNodes);
-    nodes.forEach(function(node){
-      if(node.nodeType===3){
-        var words=node.textContent.split(" ");
-        var frag=document.createDocumentFragment();
-        words.forEach(function(word,wi){
-          if(word.length){ var w=document.createElement("span"); w.className="w"; w.setAttribute("aria-hidden","true");
-            for(var i=0;i<word.length;i++){ var l=document.createElement("span"); l.className="l"; l.textContent=word[i]; w.appendChild(l); letters.push(l); }
-            frag.appendChild(w); }
-          if(wi<words.length-1) frag.appendChild(document.createTextNode(" "));
-        });
-        container.replaceChild(frag,node);
-      } else if(node.nodeType===1){ splitInto(node); }
-    });
-  }
-  splitInto(h);
-  var hero=h.closest(".hero")||h.parentElement;
-  var pos=[],raf=null,px=-9999,py=-9999,fired=false;
-  var R=170, BASE_W=500, MAX_W=660, BASE_S=30, MAX_S=100;
-  function measure(){ pos=letters.map(function(l){var r=l.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2];}); }
-  function frame(){
-    raf=null;
-    for(var i=0;i<letters.length;i++){
-      var dx=pos[i][0]-px, dy=pos[i][1]-py, d=Math.sqrt(dx*dx+dy*dy);
-      var p=Math.max(0,1-d/R); p=p*p*(3-2*p);
-      var wght=BASE_W+(MAX_W-BASE_W)*p, soft=BASE_S+(MAX_S-BASE_S)*p;
-      letters[i].style.fontVariationSettings='"SOFT" '+soft.toFixed(0)+',"WONK" 1,"wght" '+wght.toFixed(0);
-      letters[i].style.color = p>0.02 ? 'color-mix(in srgb, var(--ink) '+(100-28*p).toFixed(0)+'%, var(--clay))' : '';
-    }
-  }
-  function onmove(x,y){ if(fired) return; px=x; py=y; if(!raf) raf=requestAnimationFrame(frame); }
-  hero.addEventListener("mousemove",function(e){onmove(e.clientX,e.clientY);},{passive:true});
-  hero.addEventListener("mouseleave",function(){onmove(-9999,-9999);},{passive:true});
-  hero.addEventListener("touchmove",function(e){var t=e.touches[0]; if(t) onmove(t.clientX,t.clientY);},{passive:true});
-  hero.addEventListener("touchend",function(){onmove(-9999,-9999);},{passive:true});
-  measure();
-  var rt; window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(measure,150);},{passive:true});
-  window.addEventListener("scroll",function(){ measure();
-    if(!fired && window.scrollY>hero.offsetHeight*0.6){
-      fired=true; h.classList.add("fired");
-      letters.forEach(function(l){ l.style.fontVariationSettings='"SOFT" 30,"WONK" 1,"wght" 500'; l.style.color=''; });
-    }
-  },{passive:true});
-})();
-</script>
+
 <script>
 (function(){
  if(window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
