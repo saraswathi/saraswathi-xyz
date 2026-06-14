@@ -29,7 +29,7 @@
 <header class="hero" style="padding:clamp(2.6rem,8vw,5.5rem) 0 clamp(2.4rem,6vw,4rem)">
   
   <p class="eyebrow">Product Design Lead · Los Angeles / Remote</p>
-  <h1 class="display">Designing with machines.</h1>
+  <h1 class="display" aria-label="Designing with machines."><span class="clayz">Designing with</span> <span class="glitch">machines.</span></h1>
   <p class="value">I take products from zero to shipped: strategy, research, design, and working code. Over a decade of work spanning AI, fintech, and Web3, from founding teams to Fortune 500.</p>
   <div class="cta-row">
     <a class="btn solid" href="mailto:hello@saraswathi.xyz">Email me</a>
@@ -72,41 +72,32 @@
 
 <script>
 (function(){
- if(window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
- var h=document.querySelector(".hero h1.display"); if(!h) return;
- var words=h.textContent.split(" ");
- h.setAttribute("aria-label",h.textContent);
- h.textContent="";
- words.forEach(function(w,wi){
-   var ws=document.createElement("span"); ws.className="cw"; ws.textContent=w; ws.setAttribute("aria-hidden","true");
-   h.appendChild(ws);
-   if(wi<words.length-1) h.appendChild(document.createTextNode(" "));
- });
- var chunks=[].slice.call(h.querySelectorAll(".cw"));
- var fired=false, raf=null, px=-9999, py=-9999;
- var BASE=500, PEAK=680, R=200;
- function frame(){
-   raf=null;
-   for(var i=0;i<chunks.length;i++){
-     var r=chunks[i].getBoundingClientRect();
-     var cx=r.left+r.width/2, cy=r.top+r.height/2;
-     var d=Math.hypot(px-cx,py-cy);
-     var t=Math.max(0,1-d/R);
-     var w=Math.round(BASE+(PEAK-BASE)*t*t);
-     chunks[i].style.fontVariationSettings='"wght" '+w;
-   }
+ var reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+ // wet clay on the verb
+ var z=document.querySelector(".hero .display .clayz");
+ if(z && !reduce){
+   var words=z.textContent.split(" "); z.textContent="";
+   words.forEach(function(w,wi){ var s=document.createElement("span"); s.className="cw"; s.setAttribute("aria-hidden","true"); s.textContent=w; z.appendChild(s); if(wi<words.length-1) z.appendChild(document.createTextNode(" ")); });
+   var H=z.closest(".display");
+   var chunks=[].slice.call(z.querySelectorAll(".cw"));
+   var fired=false, raf=null, px=-9999, py=-9999, BASE=500, PEAK=900, R=320;
+   function frame(){ raf=null; for(var i=0;i<chunks.length;i++){ var r=chunks[i].getBoundingClientRect(); var cx=r.left+r.width/2, cy=r.top+r.height/2; var d=Math.hypot(px-cx,py-cy); var t=Math.max(0,1-d/R); t=t*(2-t); var w=Math.round(BASE+(PEAK-BASE)*t); var o=Math.round(6+(72-6)*t); chunks[i].style.fontVariationSettings='"opsz" '+o+',"wght" '+w; } }
+   function move(x,y){ if(fired) return; px=x; py=y; H.classList.add("molding"); if(!raf) raf=requestAnimationFrame(frame); }
+   document.addEventListener("mousemove",function(e){ move(e.clientX,e.clientY); },{passive:true});
+   document.addEventListener("touchmove",function(e){ var t=e.touches[0]; if(t) move(t.clientX,t.clientY); },{passive:true});
+   window.addEventListener("scroll",function(){ if(fired) return; var hb=z.getBoundingClientRect(); if(hb.bottom < 0){ fired=true; H.classList.remove("molding"); chunks.forEach(function(c){ c.style.fontVariationSettings='"wght" '+BASE; }); } },{passive:true});
  }
- function move(x,y){ if(fired) return; px=x; py=y; h.classList.add("molding"); if(!raf) raf=requestAnimationFrame(frame); }
- document.addEventListener("mousemove",function(e){ move(e.clientX,e.clientY); },{passive:true});
- document.addEventListener("touchmove",function(e){ var t=e.touches[0]; if(t) move(t.clientX,t.clientY); },{passive:true});
- window.addEventListener("scroll",function(){
-   if(fired) return;
-   var hb=h.getBoundingClientRect();
-   if(hb.bottom < 0){
-     fired=true; h.classList.remove("molding");
-     chunks.forEach(function(c){ c.style.fontVariationSettings='"wght" '+BASE; });
-   }
- },{passive:true});
+ // glitch on the noun
+ var gword=document.querySelector(".hero .display .glitch");
+ if(gword && !reduce){
+   var txt=gword.textContent; gword.textContent="";
+   var base=document.createElement("span"); base.className="base"; base.textContent=txt; gword.appendChild(base);
+   ["rb","s1","s2","s3"].forEach(function(cls){ var s=document.createElement("span"); s.className="slice "+cls; s.setAttribute("aria-hidden","true"); s.textContent=txt; gword.appendChild(s); });
+   var busy=false, tc=10;
+   function mosh(){ if(busy) return; busy=true; gword.classList.add("mosh"); setTimeout(function(){ gword.classList.remove("mosh"); busy=false; },560); }
+   gword.addEventListener("mouseenter",function(){ mosh(); tc=10; });
+   setInterval(function(){ tc--; if(tc<=0){ mosh(); tc=10; } },1000);
+ }
 })();
 </script>
 <footer class="site"><span class="foot-meta">© 2026 saraswathi subbaraman · designed by hand, produced with machines under direction</span></footer>
